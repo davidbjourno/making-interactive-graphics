@@ -1,5 +1,6 @@
 # making-interactive-graphics
 ‘Making interactive graphics with D3 and React’, an original tutorial for Journocoders London, October 2017
+
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
