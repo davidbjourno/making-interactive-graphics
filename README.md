@@ -5,16 +5,14 @@ An original tutorial for [Journocoders London](https://www.meetup.com/Journocode
 
 ## Introduction
 
-Thanks for joining us at this month's Journocoders. We're going to build an interactive data visualisation for the web using two of the world's most popular [JavaScript libraries](https://en.wikipedia.org/wiki/JavaScript_library):
+Thanks for joining us at this month's Journocoders. We're going to build an interactive data visualisation using two of the world's most popular [JavaScript libraries](https://en.wikipedia.org/wiki/JavaScript_library):
 
-* 📊 [D3.js](https://d3js.org/) is a library for “manipulating documents based on data”, and there's really no more concise way to describe it than that. D3 allows you to [bind data](https://github.com/d3/d3-selection/blob/master/README.md#joining-data) to web elements (usually [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) elements) then control how those elements look based on properties of the bound data. It was created by [Mike Bostock](https://twitter.com/mbostock), a former New York Times graphics editor, and is probably the only really indispensable tool for making online dataviz.
-* ⚛ [React](https://facebook.github.io/react/) is a library for building user interfaces. It provides, at least IMHO, a simple and elegant solution for making interactive components (or whole apps) for the web. It was created by Facebook, which [looked to be problematic](https://medium.com/@raulk/if-youre-a-startup-you-should-not-use-react-reflecting-on-the-bsd-patents-license-b049d4a67dd2) but [doesn't so much anymore](https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/).
+* 📊 [D3.js](https://d3js.org/) is a library for “manipulating documents based on data”, and there's really no more concise way to describe it than that. Commonly used for building data visualisations, it allows you to [bind data](https://github.com/d3/d3-selection/blob/master/README.md#joining-data) to web elements (usually [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) elements) then control how those elements look based on properties of the bound data. D3 was created by [Mike Bostock](https://twitter.com/mbostock), a former New York Times graphics editor, and is probably the only really indispensable tool for making online dataviz.
+* ⚛ [React](https://facebook.github.io/react/) is a library for building user interfaces made up of self-contained components that automatically update with changes to their underlying data. This component-based approach makes React a popular choice for building anything from basic interactive components all the way up to whole apps. React was created by Facebook, which [looked to be problematic](https://medium.com/@raulk/if-youre-a-startup-you-should-not-use-react-reflecting-on-the-bsd-patents-license-b049d4a67dd2) but [doesn't so much anymore](https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/).
 
 A selection of D3 + React examples can be found [here](https://react.rocks/tag/D3).
 
-We'll use D3 to make a simple bar chart with dynamic filters and transitions controlled by React. This is not an advanced D3 tutorial; instead, the aim is to explore some of the possibilities for interactive graphics development offered by this powerful combination of tools.
-
-Nor will it address the debate over [the desirability of interactivity](https://www.vis4.net/blog/posts/in-defense-of-interactive-graphics/). Save that shit for Twitter.
+We'll use React to build a simple app featuring a D3 chart with dynamic filters and transitions. This is not an advanced D3 tutorial; instead, the aim is to explore some of the possibilities for interactive development offered by this powerful combination of tools.
 
 ## Before you start
 You'll need to ensure you have the software below installed and working. Mac users may wish to install [Homebrew](https://brew.sh/), which will make it quicker and easier to install most of these requirements. I'm assuming Linux users have all this stuff squared away.
@@ -41,7 +39,41 @@ macOS | Windows
 [Sublime Text](https://www.sublimetext.com/3)/`brew cask install sublime-text` | [Sublime Text](https://www.sublimetext.com/3)
 
 ## Up and running
-Coming soon.
+Open a terminal and type
+
+`cd ~` <kbd>Enter</kbd>
+
+Now run
+
+`git clone git@github.com:davidbjourno/making-interactive-graphics.git`
+
+followed by
+
+`cd making-interactive-graphics`
+
+This will pull down the tutorial project from GitHub into your home directory and ensure you're working in the project directory. We're going to be using [Yarn](https://yarnpkg.com/en/) to manage the various software packages we need for this project, so run
+
+`yarn`
+
+to install all the required Node packages. If Yarn isn't found in your system, run
+
+`npm install --global yarn`
+
+to install it via the Node package manager, then try running it again. When Yarn has finished installing the project dependencies, run
+
+`yarn start`
+
+to launch a local web server, then navigate to `localhost:3000` in a browser. You should see this page:
+
+![Welcome to React](images/react-app.png)
+
+The boilerplate code for this tutorial was created by a tool called [Create React App](https://github.com/facebookincubator/create-react-app), which generates a project structure containing everything we need to start developing with React. However, it doesn't include D3 out of the box, so run
+
+`yarn add d3`
+
+to install it into your project.
+
+At this point, you're ready to start writing code.
 
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
