@@ -80,7 +80,9 @@ The boilerplate code for this project was created by a tool called [Create React
 
 Open the project directory in your code editor (either Atom or Sublime Text) and open the file `src/index.js`. Include the Bootstrap CSS in your app by inserting this at line 4:
 
-`import 'bootstrap/dist/css/bootstrap.css';`
+```
+import 'bootstrap/dist/css/bootstrap.css';
+```
 
 At this point, you're ready to start writing React code.
 
@@ -111,11 +113,15 @@ making-interactive-graphics
 
 Let's take a quick spin through the main files in the project. We've already seen `public/index.html`; it's a standard HTML page with the familiar `<head>` and `<body>` elements. The interesting part, for our purposes, is line 29:
 
-`<div id="root"></div>`
+```html
+<div id="root"></div>
+```
 
 This `<div>` element is the “root” node for the simple app created by Create React App. Everything inside it is rendered and controlled by React. This is established in `src/index.js`, where the key line is:
 
-`ReactDOM.render(<App />, document.getElementById('root'));`
+```javascript
+ReactDOM.render(<App />, document.getElementById('root'));
+```
 
 Here, the `render` method from the `react-dom` package (installed into the project by Create React App) is called and passed two arguments separated by a comma:
 
@@ -185,6 +191,7 @@ class App extends Component {
   }
 }
 ```
+What's happening here? TKTK.
 
 A component's state — `this.state` — is just a JavaScript object, but one which is the effective “source of truth” for the component, determining how it's rendered.
 
