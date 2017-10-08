@@ -51,7 +51,7 @@ class App extends Component {
   render() {
     const years = ['2012', '2013', '2014', '2015', '2016'];
     const yearButtons = years.map((year) => {
-      return <ToggleButton value={year} key={year}>{year}</ToggleButton>
+      return <ToggleButton value={year} key={year}>{year}</ToggleButton>;
     });
     let table = <h3>Loading data…</h3>;
 
