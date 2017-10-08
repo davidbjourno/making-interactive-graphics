@@ -80,7 +80,7 @@ The boilerplate code for this project was created by a tool called [Create React
 
 Open the project directory in your code editor (either Atom or Sublime Text) and open the file `src/index.js`. Include the Bootstrap CSS in your app by inserting this at line 4:
 
-```
+```javascript
 import 'bootstrap/dist/css/bootstrap.css';
 ```
 
@@ -152,24 +152,24 @@ Back in `index.js`, if you edit some of the text inside the `<p>` tags and save 
 Let's take a leap into the unknown and replace the App component with one that manages its own internal [state](https://reactjs.org/docs/react-component.html#state) and will automatically re-render with changes to the data associated with its state. Replace lines 4-19 of `App.js` with this:
 
 ```javascript
-import { Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { year: '' }
-    this.handleClick = this.handleClick.bind(this);
+    this.state = { year: '2016' }
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleClick(event) {
-    this.setState({ year: event.target.value });
+  handleChange(value) {
+    this.setState({ year: value });
   }
 
   render() {
     const years = ['2012', '2013', '2014', '2015', '2016'];
-    const buttons = years.map((year) => {
-      return <Button value={year}>{year}</Button>
+    const yearButtons = years.map((year) => {
+      return <ToggleButton value={year} key={year}>{year}</ToggleButton>
     });
 
     return (
@@ -181,9 +181,9 @@ class App extends Component {
 
         <Col xs={12} md={8} mdPush={2}>
           <h3>Select a year</h3>
-          <ButtonGroup onClick={this.handleClick}>
-            {buttons}
-          </ButtonGroup>
+          <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2016'} onChange={this.handleChange} justified>
+            {yearButtons}
+          </ToggleButtonGroup>
           <h1>{this.state.year}</h1>
         </Col>
       </div>

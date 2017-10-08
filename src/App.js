@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { year: '' }
-    this.handleClick = this.handleClick.bind(this);
+    this.state = { year: '2016' }
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleClick(event) {
-    this.setState({ year: event.target.value });
+  handleChange(value) {
+    this.setState({ year: value });
   }
 
   render() {
     const years = ['2012', '2013', '2014', '2015', '2016'];
-    const buttons = years.map((year) => {
-      return <Button value={year}>{year}</Button>
+    const yearButtons = years.map((year) => {
+      return <ToggleButton value={year} key={year}>{year}</ToggleButton>
     });
 
     return (
@@ -30,9 +30,9 @@ class App extends Component {
 
         <Col xs={12} md={8} mdPush={2}>
           <h3>Select a year</h3>
-          <ButtonGroup onClick={this.handleClick}>
-            {buttons}
-          </ButtonGroup>
+          <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2016'} onChange={this.handleChange} justified>
+            {yearButtons}
+          </ToggleButtonGroup>
           <h1>{this.state.year}</h1>
         </Col>
       </div>
