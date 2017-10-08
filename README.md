@@ -191,7 +191,18 @@ class App extends Component {
   }
 }
 ```
-What's happening here? TKTK.
+
+Now your page features a toggle button group which controls the value of the header beneath it. Let's quickly take a closer look at what's going on here:
+
+* Line 4: import some pre-built and pre-styled components from React-Bootstrap
+* Lines 6-16: define a [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) that initialises the component, sets its initial state to `{ year: '2016' }` and binds the `handleChange` event handler to the class as a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Prototype_methods) (which can then be called using `this.methodName`)
+* Lines 14-16: define the `handleChange` [event handler](https://reactjs.org/docs/handling-events.html), which, when fired by an interaction with an element (in this case, a button), receives a value from that element and sets `this.state.year` to that value
+* Line 18: define a [render method](https://reactjs.org/docs/react-component.html#render) to establish the component's output (what will be rendered in the DOM)
+* Lines 19-22: define an array of values that we want to be able to select from and [map](https://mdn-mixmix.hashbase.io/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map.html) those values to an array of `ToggleButton` components
+* Lines 24-39: the JSX that will ultimately be rendered as elements on our page. Key lines to note here are:
+    * Line 33: `onChange={this.handleChange}` passes `handleChange` to the `ToggleButtonGroup` component as the function to call when its `onChange` [event](https://react-bootstrap.github.io/components.html#btn-groups-toggle-group-props) is fired
+    * Line 34: include the array of `ToggleButton` components we created via `.map()` on lines 20-22
+    * Line 36: set the text of this `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2016')
 
 A component's state — `this.state` — is just a JavaScript object, but one which is the effective “source of truth” for the component, determining how it's rendered.
 
