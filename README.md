@@ -158,7 +158,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { year: '2016' }
+    this.state = { year: '2012' }
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -179,9 +179,9 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
 
-        <Col xs={12} md={8} mdPush={2}>
+        <Col xs={12} md={6} mdPush={2}>
           <h3>Select a year</h3>
-          <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2016'} onChange={this.handleChange} justified>
+          <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2012'} onChange={this.handleChange} justified>
             {yearButtons}
           </ToggleButtonGroup>
           <h1>{this.state.year}</h1>
@@ -194,14 +194,20 @@ class App extends Component {
 
 Now your page features a toggle button group which controls the value of the header beneath it. Let's quickly take a closer look at what's going on here:
 
-* Line 4: import some pre-built and pre-styled components from React-Bootstrap
-* Lines 6-16: define a [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) that initialises the component, sets its initial state to `{ year: '2016' }` and binds the `handleChange` event handler to the class as a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Prototype_methods) (which can then be called using `this.methodName`)
-* Lines 14-16: define the `handleChange` [event handler](https://reactjs.org/docs/handling-events.html), which, when fired by an interaction with an element (in this case, a button), receives a value from that element and sets `this.state.year` to that value
-* Line 18: define a [render method](https://reactjs.org/docs/react-component.html#render) to establish the component's output (what will be rendered in the DOM)
-* Lines 19-22: define an array of values that we want to be able to select from and [map](https://mdn-mixmix.hashbase.io/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map.html) those values to an array of `ToggleButton` components
+* Line 4: import some pre-built and pre-styled components from React-Bootstrap.
+* Lines 6-16: define a [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) that initialises the component, sets its initial state to `{ year: '2012' }` and binds the `handleChange` event handler to the class as a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Prototype_methods) (which can then be called using `this.methodName`).
+* Lines 14-16: define the `handleChange` [event handler](https://reactjs.org/docs/handling-events.html), which, when fired by an interaction with an element (in this case, a button), receives a value from that element and sets `this.state.year` to that value.
+* Line 18: define a [render method](https://reactjs.org/docs/react-component.html#render) to establish the component's output (what will be rendered in the DOM).
+* Lines 19-22: define an array of values that we want to be able to select from and [map](https://mdn-mixmix.hashbase.io/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map.html) those values to an array of `ToggleButton` components.
 * Lines 24-39: the JSX that will ultimately be rendered as elements on our page. Key lines to note here are:
-    * Line 33: `onChange={this.handleChange}` passes `handleChange` to the `ToggleButtonGroup` component as the function to call when its `onChange` [event](https://react-bootstrap.github.io/components.html#btn-groups-toggle-group-props) is fired
-    * Line 34: include the array of `ToggleButton` components we created via `.map()` on lines 20-22
-    * Line 36: set the text of this `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2016')
+    * Line 33: `onChange={this.handleChange}` passes `handleChange` to the `ToggleButtonGroup` component as the function to call when its `onChange` [event](https://react-bootstrap.github.io/components.html#btn-groups-toggle-group-props) is fired.
+    * Line 34: include the array of `ToggleButton` components we created via `.map()` on lines 20-22.
+    * Line 36: set the text of this `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2012').
 
-A component's state — `this.state` — is just a JavaScript object, but one which is the effective “source of truth” for the component, determining how it's rendered.
+The cumulative effect of all this is that, when a button element is clicked, `this.state.year` is set to the value of that button, and with this update to the component's state, React triggers a smart update of the DOM that changes the value of the `<h1>` element to match the value of `this.state.year`.
+
+A component's state (`this.state`) is just a JavaScript object, but hopefully this part of the tutorial goes some way towards illustrating how state serves as the effective “source of truth” for the component, determining how and when its output is rendered and updated.
+
+We can use state to manage more than simple string values, however; we're going to use it to manage the data that will be filtered and then passed to our chart component. So let's load some [IMF data](https://www.imf.org/external/pubs/ft/weo/2017/01/weodata/index.aspx) on G7 countries' GDP per capita growth rates from `public/data.csv`:
+
+TK
