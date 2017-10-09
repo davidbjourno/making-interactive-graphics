@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Col, ToggleButtonGroup, ToggleButton, Table } from 'react-bootstrap';
 import * as d3 from 'd3';
+import Chart from './Chart'
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class App extends Component {
       filteredData: [],
     };
     this.handleChange = this.handleChange.bind(this);
-    this.filterData = this.filterData.bind(this);
   }
 
   componentDidMount() {
@@ -22,12 +22,12 @@ class App extends Component {
       if (error) throw error;
 
       this.setState({ rawData: data }, () => {
-        this.filterData('2012');
+        this.handleChange('2012');
       });
     });
   }
 
-  filterData(value) {
+  handleChange(value) {
     const filteredData = this.state.rawData.map(row => {
       return {
         country: row.Country,
@@ -35,12 +35,9 @@ class App extends Component {
       };
     });
 
-    this.setState({ filteredData });
-  }
-
-  handleChange(value) {
-    this.setState({ year: value }, () => {
-      this.filterData(value);
+    this.setState({
+      year: value,
+      filteredData,
     });
   }
 
@@ -88,6 +85,7 @@ class App extends Component {
           <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2012'} onChange={this.handleChange} justified>
             {yearButtons}
           </ToggleButtonGroup>
+          <Chart data={this.state.filteredData}></Chart>
           {table}
         </Col>
       </div>
