@@ -331,6 +331,8 @@ render() {
 ```
 You should see the contents of the table update when you click on the toggle buttons.
 
+That wasn't too painful, right? By now, I'm hoping you'll be starting to get a sense for the flexibility provided by a React-based approach. Using state and class methods that update state to manage the flow of data in our app gives us a high degree of control over its functionality without the need to learn a lot of framework-specific methods or techniques (as you would with, for example, [Angular](https://angular.io/)). With the exceptions of React's default component methods and JSX, everything we're doing here is pure JavaScript.
+
 ## The Chart component
 
 ## D3 transitions in React
