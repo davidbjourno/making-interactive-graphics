@@ -14,37 +14,33 @@ class App extends Component {
       filteredData: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.filterData = this.filterData.bind(this);
   }
 
   componentDidMount() {
     d3.csv('data.csv', (error, data) => {
       if (error) throw error;
 
-      const filteredData = data.map(row => {
-        return {
-          country: row.Country,
-          growth: parseFloat(row.y2012),
-        };
-      });
-
-      this.setState({
-        rawData: data,
-        filteredData,
+      this.setState({ rawData: data }, () => {
+        this.filterData('2012');
       });
     });
   }
 
-  handleChange(value) {
+  filterData(value) {
     const filteredData = this.state.rawData.map(row => {
       return {
         country: row.Country,
         growth: parseFloat(row[`y${value}`]),
       };
-    })
+    });
 
-    this.setState({
-      year: value,
-      filteredData,
+    this.setState({ filteredData });
+  }
+
+  handleChange(value) {
+    this.setState({ year: value }, () => {
+      this.filterData(value);
     });
   }
 

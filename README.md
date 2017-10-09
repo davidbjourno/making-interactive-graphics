@@ -117,20 +117,20 @@ Let's take a quick spin through the main files in the project. We've already see
 <div id="root"></div>
 ```
 
-This `<div>` element is the “root” node for the simple app created by Create React App. Everything inside it is rendered and controlled by React. This is established in `src/index.js`, where the key line is:
+This `<div>` element is the “root” node for the simple app created by Create React App. Everything inside this element is created and controlled by React. This is established in `src/index.js`, where the key line is:
 
 ```javascript
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-Here, the `render` method from the `react-dom` package (installed into the project by Create React App) is called and passed two arguments separated by a comma:
+Here, the `render()` method from the `react-dom` package (installed into the project by Create React App) is called and passed two arguments separated by a comma:
 
 1. A component to render (`<App />`)
-2. A root node, i.e. an element within which to render that component (in this case, the element with the ID of `root` — the `<div>` on line 29 of `public/index.html`)
+2. A root node, i.e. an element within which to display the output of that component (in this case, the element with the ID `root` — the `<div>` on line 29 of `public/index.html`)
 
 (I know this is a lot of jargon. Bear with me.)
 
-It's standard practice to have a short `index.js` like this in a React project. Its primary function is to establish an entry point for the app on the page, and a common name for the first component in a React component hierarchy is ‘App’. Hence we render `<App />` to `document.getElementById('root')`, which returns the `<div>` on line 29 of `public/index.html`.
+It's standard practice to have a short `index.js` like this in a React project. Its primary function is to establish an entry point for the app on the page. A common name for the first component in a React component hierarchy is ‘App’; hence we render `<App />` to `document.getElementById('root')`, which returns the `<div>` on line 29 of `public/index.html`.
 
 Where does the App component come from? Take a look at the first five rows of `index.js`:
 
@@ -145,7 +145,7 @@ So the App component starts life as another JavaScript file called, astonishingl
 
 In `App.js`, you'll see some more JavaScript and CSS module imports followed by a [JavaScript class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) called `App`. This class defines the App component.
 
-Not all React components have to be defined by a class; they can also be JavaScript functions that simply return some JSX for rendering. We only have two hours for this tutorial, so I'm going to skip over the details of the differences between the two component types and how they work, but you can always go back and read about them [here](https://reactjs.org/docs/components-and-props.html).
+Not all React components have to be defined by a class; they can also be JavaScript functions that simply return some JSX to be rendered. We only have two hours for this tutorial, so I'm going to skip over the details of the differences between the two component types and how they work, but you can always go back and read about them [here](https://reactjs.org/docs/components-and-props.html).
 
 Back in `index.js`, if you edit some of the text inside the `<p>` tags and save the file, you should see the page reload automatically in your browser to reflect your changes. This is because Create React App projects are set up in such a way that they live-reload by default.
 
@@ -192,22 +192,145 @@ class App extends Component {
 }
 ```
 
-Now your page features a toggle button group which controls the value of the header beneath it. Let's quickly take a closer look at what's going on here:
+Now your page features a toggle button group which controls the value of the header beneath it. Let's quickly unpack some of what's happening here:
 
 * Line 4: import some pre-built and pre-styled components from React-Bootstrap.
-* Lines 6-16: define a [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) that initialises the component, sets its initial state to `{ year: '2012' }` and binds the `handleChange` event handler to the class as a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Prototype_methods) (which can then be called using `this.methodName`).
-* Lines 14-16: define the `handleChange` [event handler](https://reactjs.org/docs/handling-events.html), which, when fired by an interaction with an element (in this case, a button), receives a value from that element and sets `this.state.year` to that value.
+* Lines 6-16: define a [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) that initialises the component, sets its initial state to `{ year: '2012' }` and binds the `handleChange()` [event handler](https://reactjs.org/docs/handling-events.html) to the class as a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Prototype_methods) (once bound, methods can be called using `this.methodName()`).
+* Lines 14-16: define `handleChange()`. When fired by an interaction with an element (in this case, a button), `handleChange()` receives a value from that element and calls `setState()` to set the value of `this.state.year` to that value.
 * Line 18: define a [render method](https://reactjs.org/docs/react-component.html#render) to establish the component's output (what will be rendered in the DOM).
 * Lines 19-22: define an array of values that we want to be able to select from and [map](https://mdn-mixmix.hashbase.io/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map.html) those values to an array of `ToggleButton` components.
 * Lines 24-39: the JSX that will ultimately be rendered as elements on our page. Key lines to note here are:
-    * Line 33: `onChange={this.handleChange}` passes `handleChange` to the `ToggleButtonGroup` component as the function to call when its `onChange` [event](https://react-bootstrap.github.io/components.html#btn-groups-toggle-group-props) is fired.
+    * Line 33: `onChange={this.handleChange}` passes `handleChange()` to the `ToggleButtonGroup` component as the function to call when its `onChange` [event](https://react-bootstrap.github.io/components.html#btn-groups-toggle-group-props) is fired.
     * Line 34: include the array of `ToggleButton` components we created via `.map()` on lines 20-22.
-    * Line 36: set the text of this `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2012').
+    * Line 36: set the text of the `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2012').
 
-The cumulative effect of all this is that, when a button element is clicked, `this.state.year` is set to the value of that button, and with this update to the component's state, React triggers a smart update of the DOM that changes the value of the `<h1>` element to match the value of `this.state.year`.
+The cumulative effect of all this is that, when a button element is clicked, `this.state.year` is set to the value of that button, and with this update to the component's state, React triggers a smart update of the DOM that changes the text of the `<h1>` element to the value of `this.state.year`.
 
 A component's state (`this.state`) is just a JavaScript object, but hopefully this part of the tutorial goes some way towards illustrating how state serves as the effective “source of truth” for the component, determining how and when its output is rendered and updated.
 
-We can use state to manage more than simple string values, however; we're going to use it to manage the data that will be filtered and then passed to our chart component. So let's load some [IMF data](https://www.imf.org/external/pubs/ft/weo/2017/01/weodata/index.aspx) on G7 countries' GDP per capita growth rates from `public/data.csv`:
+We can use state to manage more than simple string values, however; we're going to use it to manage the data that will be filtered and then passed to our chart component. We'll load some [IMF data](https://www.imf.org/external/pubs/ft/weo/2017/01/weodata/index.aspx) on G7 countries' GDP per capita growth rates from `public/data.csv` and render this data first in an HTML table to illustrate how our data handling is going to work. Start by importing the Table component from React-Bootstrap on line 4 of `App.js`:
 
-TK
+```javascript
+import { Col, ToggleButtonGroup, ToggleButton, Table } from 'react-bootstrap';
+```
+
+Then import D3 in its entirety on line 5 (there are [alternatives to doing this](https://github.com/d3/d3#installing), but we're not getting into the modularity of D3 v4 here):
+
+```javascript
+import * as d3 from 'd3';
+```
+
+Replace your class constructor with this expanded one, which adds a couple of empty arrays as properties of state:
+
+```javascript
+constructor(props) {
+  super(props);
+
+  this.state = {
+    year: '2012',
+    rawData: [],
+    filteredData: [],
+  };
+  this.handleChange = this.handleChange.bind(this);
+}
+```
+
+We're going to load the complete data from `public/data.csv` into the `this.state.rawData` array. To do so, we'll make use of one of the React component [“lifecycle hooks”](https://reactjs.org/docs/react-component.html#the-component-lifecycle) — methods which are called automatically at specific points in the component render and update cycles. The `componentDidMount()` method is called when a component successfully [“mounts”](https://reactjs.org/docs/react-component.html#mounting) (when it's initialised and its output added to the DOM). This is the point at which it's advised to load remote data. Insert this code at line 19:
+
+```javascript
+componentDidMount() {
+  d3.csv('data.csv', (error, data) => {
+    if (error) throw error;
+
+    this.setState({ rawData: data }, () => {
+      this.filterData('2012');
+    });
+  });
+}
+```
+
+So when `componentDidMount()` is called by React, D3's [`.csv()`](https://github.com/d3/d3-request/blob/master/README.md#csv) method reads our CSV file and returns the individual rows of data, which we then add to the previously empty `this.state.rawData` array using `setState()`.
+
+You'll have noticed that `setState()` here also calls a (currently non-existent) method called `filterData()` to be fired immediately after the state update. This is how we'll ensure that our future chart component only ever needs to work with the portion of `public/data.csv` that corresponds to the selected year. So let's write the `filterData()` method; insert this code at line 30:
+
+```javascript
+filterData(value) {
+  const filteredData = this.state.rawData.map(row => {
+    return {
+      country: row.Country,
+      growth: parseFloat(row[`y${value}`]),
+    };
+  });
+
+  this.setState({ filteredData });
+}
+```
+
+**Don't forget to bind it to the class** in the same way we're binding `handleChange()` on line 16. Then replace `handleChange()` with the following in order to ensure the data will be re-filtered every time a different year is selected:
+
+```javascript
+handleChange(value) {
+  this.setState({ year: value }, () => {
+    this.filterData(value);
+  });
+}
+```
+
+With all of our data-handling set up, replace your `render()` method with the following to render a data table to the page (with a loading message that displays until the data is loaded):
+
+```javascript
+render() {
+  const years = ['2012', '2013', '2014', '2015', '2016'];
+  const yearButtons = years.map((year) => {
+    return <ToggleButton value={year} key={year}>{year}</ToggleButton>;
+  });
+  let table = <h3>Loading data…</h3>;
+
+  if (this.state.filteredData.length) {
+    const rows = this.state.filteredData.map((row) => {
+      return (
+        <tr key={row.country}>
+          <td>{row.country}</td>
+          <td>{row.growth}</td>
+        </tr>
+      );
+    });
+
+    table = (
+      <Table striped bordered>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>{this.state.year} growth rate (GDP per capita)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </Table>
+    );
+  }
+
+  return (
+    <div className="App">
+      <div className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h2>Welcome to React</h2>
+      </div>
+
+      <Col xs={12} md={6} mdPush={3}>
+        <h3>Select a year</h3>
+        <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2012'} onChange={this.handleChange} justified>
+          {yearButtons}
+        </ToggleButtonGroup>
+        {table}
+      </Col>
+    </div>
+  );
+}
+```
+You should see the contents of the table update when you click on the toggle buttons.
+
+## The Chart component
+
+## D3 transitions in React
