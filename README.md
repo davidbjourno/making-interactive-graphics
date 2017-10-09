@@ -112,7 +112,7 @@ making-interactive-graphics
     └── registerServiceWorker.js
 ```
 
-Let's take a quick spin through the main files in the project. We've already seen `public/index.html`; it's a standard HTML page with the familiar `<head>` and `<body>` elements. The interesting part, for our purposes, is line 29:
+Let's take a quick spin through the main files in the project. `public/index.html` is a standard HTML page with the familiar `<head>` and `<body>` elements. The interesting part of it, for our purposes, is line 29:
 
 ```html
 <div id="root"></div>
@@ -127,7 +127,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 Here, the `render()` method from the `react-dom` package (installed into the project by Create React App) is called and passed two arguments separated by a comma:
 
 1. A component to render (`<App />`)
-2. A root node, i.e. an element within which to display the output of that component (in this case, the element with the ID `root` — the `<div>` on line 29 of `public/index.html`)
+2. A root node, i.e. an element within which to display the output of that component (in this case, the element with the ID `root` — the `<div>` on line 29 of `index.html`)
 
 (I know this is a lot of jargon. Bear with me.)
 
@@ -244,18 +244,18 @@ componentDidMount() {
     if (error) throw error;
 
     this.setState({ rawData: data }, () => {
-      this.filterData('2012');
+      this.handleChange('2012');
     });
   });
 }
 ```
 
-So when `componentDidMount()` is called by React, D3's [`.csv()`](https://github.com/d3/d3-request/blob/master/README.md#csv) method reads our CSV file and returns the individual rows of data, which we then add to the previously empty `this.state.rawData` array using `setState()`.
+So when `componentDidMount()` is called by React, D3's [`.csv()`](https://github.com/d3/d3-request/blob/master/README.md#csv) method reads our CSV file and returns the individual rows of data. We then call `setState()` to replace the previously empty `this.state.rawData` array with this data.
 
-You'll have noticed that `setState()` here also calls a (currently non-existent) method called `filterData()` to be fired immediately after the state update. This is how we'll ensure that our future chart component only ever needs to work with the portion of `public/data.csv` that corresponds to the selected year. So let's write the `filterData()` method; insert this code at line 30:
+You'll have noticed that `setState()` here also calls `handleChange()` to be fired immediately after the state update. This is how we'll ensure that our future chart component only ever needs to work with the portion of `data.csv` that corresponds to the selected year. Let's modify `handleChange()` so it'll do just that:
 
 ```javascript
-filterData(value) {
+handleChange(value) {
   const filteredData = this.state.rawData.map(row => {
     return {
       country: row.Country,
@@ -263,19 +263,14 @@ filterData(value) {
     };
   });
 
-  this.setState({ filteredData });
-}
-```
-
-**Don't forget to bind it to the class** in the same way we're binding `handleChange()` on line 16. Then replace `handleChange()` with the following in order to ensure the data will be re-filtered every time a different year is selected:
-
-```javascript
-handleChange(value) {
-  this.setState({ year: value }, () => {
-    this.filterData(value);
+  this.setState({
+    year: value,
+    filteredData,
   });
 }
 ```
+
+As with our ToggleButton components, we're mapping the array in `this.state.rawData` to a new array which contains only the properties `country` and `growth` for whichever year value is passed to `handleChange()`. We then update state again, replacing the `this.state.filteredData` array with our newly filtered data.
 
 With all of our data-handling set up, replace your `render()` method with the following to render a data table to the page (with a loading message that displays until the data is loaded):
 
