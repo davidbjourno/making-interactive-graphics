@@ -98,6 +98,7 @@ making-interactive-graphics
 ├── images
 │   └── react-app.png
 ├── public
+│   └── data.csv
 │   └── favicon.ico
 │   └── index.html
 │   └── manifest.json
