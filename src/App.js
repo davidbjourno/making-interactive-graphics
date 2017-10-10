@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Col, ToggleButtonGroup, ToggleButton, Table } from 'react-bootstrap';
 import * as d3 from 'd3';
-import Chart from './Chart'
+import Chart from './Chart';
 
 class App extends Component {
   constructor(props) {
@@ -80,8 +80,9 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
 
-        <Col xs={12} md={6} mdPush={3}>
-          <h3>Select a year</h3>
+        <Col xs={12} md={8} mdPush={2}>
+          <h2>Economic growth of G7 countries</h2>
+          <h3>Select year</h3>
           <ToggleButtonGroup type="radio" name="yearButtons" defaultValue={'2012'} onChange={this.handleChange} justified>
             {yearButtons}
           </ToggleButtonGroup>

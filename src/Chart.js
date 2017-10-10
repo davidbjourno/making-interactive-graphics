@@ -6,14 +6,13 @@ class Chart extends Component {
     super(props);
 
     this.margin = { top: 20, right: 30, bottom: 40, left: 30 };
-    this.width = 830 - this.margin.left - this.margin.right;
+    this.width = 700 - this.margin.left - this.margin.right;
     this.height = 500 - this.margin.top - this.margin.bottom;
     this.x = d3.scaleLinear()
       .rangeRound([0, this.width]);
     this.y = d3.scaleBand()
       .rangeRound([0, this.height])
       .padding(0.1);
-    this.bars = [];
     this.updateD3 = this.updateD3.bind(this);
   }
 
@@ -40,17 +39,21 @@ class Chart extends Component {
   }
 
   render() {
-    return (
-      <svg
-        width={this.width}
-        height={this.height}
-        ref={node => this.node === node}
-      >
-        <g>
+    let svg = <h3>Loading chart…</h3>;
+
+    if (this.props.data.length) {
+      svg = (
+        <svg
+          width={this.width}
+          height={this.height}
+          ref={node => this.node === node}
+        >
           {this.bars}
-        </g>
-      </svg>
-    );
+        </svg>
+      );
+    }
+
+    return svg;
   }
 }
 
