@@ -422,7 +422,7 @@ updateD3(props) {
 On lines 23-24, we're setting the domains (the range of input values) of the x- and y-scales based on properties of the incoming data. We don't want the x-axis to change every time the data is updated, so we're fixing its maximum and minimum values at -3.5 and 3.5, based on the fact that no values in our data go any higher or lower than that. The number of countries (plotted along the y-axis) won't change at any point, but even if it did, our y-scale `bandwidth()` would update to account for that.
 
 `this.bars` defines the bar elements of our chart, which are technically SVG [`<rect>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect) (rectangle) elements. As we've done several times now, we're using `.map()` to create a new array from an existing one, in this case returning a `<rect>` for each row in `props.data`. These bars each receive the following properties:
-* `x`: position along the x-axis, according to our x-scale (`this.x()`).
+* `x`: position along the x-axis, according to our x-scale (`this.x()`). See [Bostock's example](https://bl.ocks.org/mbostock/2368837) for an explanation of why this looks a little weird.
 * `y`: position along the y-axis, according to our y-scale (`this.y()`).
 * `width`: self-explanatory, calculated by subtracting the x-axis position of the bar's right edge (always expressed as a positive number, courtesy of [`Math.abs()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs)) from the x-axis position of zero.
 * `height`: self-explanatory, calculated by our y-scale based on the number of countries plotted along the y-axis (`this.y.bandwidth()`).
@@ -472,6 +472,9 @@ Call the Chart component and pass it the data filtered by the App component as a
 ```
 
 Check your page. What do you see?
+
+### Add axes
+TK
 
 ## D3 transitions in React
 TK
