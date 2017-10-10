@@ -5,14 +5,14 @@ class Chart extends Component {
   constructor(props) {
     super(props);
 
-    this.width = 800;
-    this.height = 500;
-    this.margin = {top: 20, right: 20, bottom: 30, left: 40};
-    this.x = d3.scaleBand()
-      .rangeRound([0, this.width])
+    this.margin = { top: 20, right: 30, bottom: 40, left: 30 };
+    this.width = 830 - this.margin.left - this.margin.right;
+    this.height = 500 - this.margin.top - this.margin.bottom;
+    this.x = d3.scaleLinear()
+      .rangeRound([0, this.width]);
+    this.y = d3.scaleBand()
+      .rangeRound([0, this.height])
       .padding(0.1);
-    this.y = d3.scaleLinear()
-      .rangeRound([this.height, 0]);
     this.bars = [];
     this.updateD3 = this.updateD3.bind(this);
   }
@@ -22,16 +22,16 @@ class Chart extends Component {
   }
 
   updateD3(props) {
-    this.x.domain(props.data.map(d => d.country));
-    this.y.domain([-3.5, 3.5]);
+    this.x.domain([-3.5, 3.5]);
+    this.y.domain(props.data.map(d => d.country));
 
     this.bars = props.data.map((d) => {
       return (
         <rect
-          x={this.x(d.country)}
-          y={this.y(Math.max(0, d.growth))}
-          width={this.x.bandwidth()}
-          height={Math.abs(this.y(d.growth) - this.y(0))}
+          x={this.x(Math.min(0, d.growth))}
+          y={this.y(d.country)}
+          width={Math.abs(this.x(d.growth) - this.x(0))}
+          height={this.y.bandwidth()}
           style={{ fill: 'steelblue' }}
           key={d.country}
         />
