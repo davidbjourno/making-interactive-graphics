@@ -63,7 +63,7 @@ class App extends Component {
           <thead>
             <tr>
               <th>Country</th>
-              <th>{this.state.year} growth rate (GDP per capita)</th>
+              <th>{this.state.year} growth rate (% GDP per capita)</th>
             </tr>
           </thead>
           <tbody>
