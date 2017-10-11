@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import './Chart.css';
 
 class Chart extends Component {
   constructor(props) {
@@ -13,11 +14,24 @@ class Chart extends Component {
     this.y = d3.scaleBand()
       .rangeRound([0, this.height])
       .padding(0.1);
+    this.xAxis = d3.axisBottom(this.x)
+      .tickFormat(d => `${d}%`);
+    this.yAxis = d3.axisLeft(this.y)
+      .tickSize(0)
+      .tickPadding(6);
     this.updateD3 = this.updateD3.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
     this.updateD3(newProps);
+  }
+
+  componentDidUpdate() {
+    d3.select('.x.axis')
+      .call(this.xAxis);
+
+    d3.select('.y.axis')
+      .call(this.yAxis);
   }
 
   updateD3(props) {
@@ -27,11 +41,11 @@ class Chart extends Component {
     this.bars = props.data.map((d) => {
       return (
         <rect
+          className={`bar bar--${d.growth > 0 ? 'positive' : 'negative'}`}
           x={this.x(Math.min(0, d.growth))}
           y={this.y(d.country)}
           width={Math.abs(this.x(d.growth) - this.x(0))}
           height={this.y.bandwidth()}
-          style={{ fill: 'steelblue' }}
           key={d.country}
         />
       );
@@ -49,6 +63,8 @@ class Chart extends Component {
         >
           <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
             {this.bars}
+            <g className="x axis" transform={`translate(0, ${this.height})`}/>
+            <g className="y axis" transform={`translate(${this.x(0)}, 0)`}/>
           </g>
         </svg>
       );

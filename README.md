@@ -407,6 +407,7 @@ updateD3(props) {
   this.bars = props.data.map((d) => {
     return (
       <rect
+        className={`bar bar--${d.growth > 0 ? 'positive' : 'negative'}`}
         x={this.x(Math.min(0, d.growth))}
         y={this.y(d.country)}
         width={Math.abs(this.x(d.growth) - this.x(0))}
@@ -421,12 +422,12 @@ updateD3(props) {
 
 On lines 23-24, we're setting the domains (the range of input values) of the x- and y-scales based on properties of the incoming data. We don't want the x-axis to change every time the data is updated, so we're fixing its maximum and minimum values at -3.5 and 3.5, based on the fact that no values in our data go any higher or lower than that. The number of countries (plotted along the y-axis) won't change at any point, but even if it did, our y-scale `bandwidth()` would update to account for that.
 
-`this.bars` defines the bar elements of our chart, which are technically SVG [`<rect>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect) (rectangle) elements. As we've done several times now, we're using `.map()` to create a new array from an existing one, in this case returning a `<rect>` for each row in `props.data`. These bars each receive the following properties:
-* `x`: position along the x-axis, according to our x-scale (`this.x()`). See [Bostock's example](https://bl.ocks.org/mbostock/2368837) for an explanation of why this looks a little weird.
-* `y`: position along the y-axis, according to our y-scale (`this.y()`).
+`this.bars` defines the bar elements of our chart, which are technically SVG [`<rect>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect) (rectangle) elements. As we've done several times now, we're using `.map()` to create a new array from an existing one, in this case returning a `<rect>` for each row in `props.data`. These bars each receive the following attributes:
+* `className`: a CSS class name that's conditional upon whether the bar represents a positive or negative value.
+* `x`: the bar's position along the x-axis, according to our x-scale (`this.x()`). See [Bostock's example](https://bl.ocks.org/mbostock/2368837) for an explanation of why this looks a little weird.
+* `y`: the bar's position along the y-axis, according to our y-scale (`this.y()`).
 * `width`: self-explanatory, calculated by subtracting the x-axis position of the bar's right edge (always expressed as a positive number, courtesy of [`Math.abs()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs)) from the x-axis position of zero.
 * `height`: self-explanatory, calculated by our y-scale based on the number of countries plotted along the y-axis (`this.y.bandwidth()`).
-* `style`: self-explanatory.
 * `key`: a unique identifier [required by React](https://reactjs.org/docs/lists-and-keys.html#keys) whenever an array of elements is created by `.map()`. We're just using country name here.
 
 Make sense? Great! Make sure `componentWillReceiveProps()` calls `updateD3()`:
@@ -437,7 +438,7 @@ componentWillReceiveProps(newProps) {
 }
 ```
 
-Finally, tell `render()` to return an SVG element with the dimensions we defined earlier, and enclose `this.bars` inside it:
+Finally, tell `render()` to return an SVG element with a [`<g>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g) (SVG group) element inside it with the dimensions we defined earlier, and enclose `this.bars` inside the `<g>` element:
 
 ```jsx
 render() {
@@ -472,10 +473,63 @@ Call the Chart component and pass it the data filtered by the App component as a
 <Chart data={this.state.filteredData}></Chart>
 ```
 
-Check your page. You should see a bar chart with blue bars and no axes that updates whenever you click one of the toggle buttons. Congrats, you've made an interactive data visualisation with React and D3!
+Check your page. You should see a chart with black bars (and no axes yet) that updates whenever you click one of the toggle buttons. Congrats, you've made an interactive data visualisation with React and D3!
 
 ### Add axes
-In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component.
+In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component. First, add the following [D3 axis methods](https://github.com/d3/d3-axis#d3-axis) to your constructor:
+
+```javascript
+this.xAxis = d3.axisBottom(this.x)
+  .tickFormat(d => `${d}%`);
+this.yAxis = d3.axisLeft(this.y)
+  .tickSize(0)
+  .tickPadding(6);
+```
+
+Next, add a pair of `<g>` elements with the appropriate class names and [`transform()`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform) attributes to your `render()` method. The transforms ensure that our axes will be positioned correctly within the SVG. These elements go inside the existing `<g>` element, below `{this.bars}`:
+
+```jsx
+<g className="x axis" transform={`translate(0, ${this.height})`}/>
+<g className="y axis" transform={`translate(${this.x(0)}, 0)`}/>
+```
+
+Checking your page at this point will show the axes are still missing. This is because we haven't told D3 to apply our axis methods to anything on the page. We need to use the `componentDidUpdate()` lifecycle hook to do this, because D3 can't target an element that doesn't exist yet and `componentDidUpdate()` will be invoked _after_ the updates triggered by `componentWillReceiveProps()` have been rendered in the DOM:
+
+```javascript
+componentDidUpdate() {
+  d3.select('.x.axis')
+    .call(this.xAxis);
+
+  d3.select('.y.axis')
+    .call(this.yAxis);
+}
+```
+
+💥
+
+All that's left to do is add a bit of CSS to colour the D3 chart and bring it more into line with our page styling. Put this code in a file called `src/Chart.css` and import it into `Chart.js` as a CSS module:
+
+```css
+.bar--positive {
+  fill: steelblue;
+}
+
+.bar--negative {
+  fill: darkorange;
+}
+
+g text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.x {
+  font-size: 12px;
+}
+
+.y {
+  font-size: 14px;
+}
+```
 
 ## D3 transitions in React
 TK

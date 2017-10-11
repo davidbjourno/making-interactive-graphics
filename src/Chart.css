@@ -1,0 +1,19 @@
+.bar--positive {
+  fill: steelblue;
+}
+
+.bar--negative {
+  fill: darkorange;
+}
+
+g text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.x {
+  font-size: 12px;
+}
+
+.y {
+  font-size: 14px;
+}
