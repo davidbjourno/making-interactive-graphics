@@ -446,10 +446,12 @@ render() {
   if (this.props.data.length) {
     svg = (
       <svg
-        width={this.width}
-        height={this.height}
+        width={this.width + this.margin.left + this.margin.right}
+        height={this.height + this.margin.top + this.margin.bottom}
       >
-        {this.bars}
+        <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
+          {this.bars}
+        </g>
       </svg>
     );
   }

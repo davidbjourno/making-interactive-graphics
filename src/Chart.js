@@ -44,11 +44,12 @@ class Chart extends Component {
     if (this.props.data.length) {
       svg = (
         <svg
-          width={this.width}
-          height={this.height}
-          ref={node => this.node === node}
+          width={this.width + this.margin.left + this.margin.right}
+          height={this.height + this.margin.top + this.margin.bottom}
         >
-          {this.bars}
+          <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
+            {this.bars}
+          </g>
         </svg>
       );
     }
