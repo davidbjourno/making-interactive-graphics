@@ -124,14 +124,14 @@ This `<div>` element is the “root” node for the simple app created by Create
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-Here, the `render()` method from the `react-dom` package (installed into the project by Create React App) is invoked and passed two arguments separated by a comma:
+Here, the `render()` method from the `react-dom` package (installed into the project by Create React App) is invoked and passed two parameters separated by a comma:
 
 1. A component to render (`<App />`)
 2. A root node, i.e. an element within which to display the output of that component (in this case, the element with the ID `root` — the `<div>` on line 29 of `index.html`)
 
 (I know this is a lot of jargon. Bear with me.)
 
-It's standard practice to have a short `index.js` like this in a React project. Its primary function is to establish an entry point for the app on the page. A common name for the first component in a React component hierarchy is ‘App’; hence we render `<App />` to `document.getElementById('root')`, which returns the `<div>` on line 29 of `public/index.html`.
+It's standard practice to have a short `index.js` like this in a React project. Its primary function is to establish an entry point for the app on the page. A common name for the top-level component in a React app ‘App’; hence we render `<App />` to `document.getElementById('root')`, which returns the `<div>` on line 29 of `public/index.html`.
 
 Where does the App component come from? Take a look at the first five rows of `index.js`:
 
@@ -331,7 +331,7 @@ You should see the contents of the table update when you click on the toggle but
 That wasn't too painful, right? By now, I'm hoping you'll be starting to get a sense for the flexibility provided by a React-based approach. Using state, and methods which perform specific updates to state, to manage the flow of data in our app gives us a high degree of control over its functionality, with the added bonus that we don't need to learn a lot of library-specific methods or techniques (as you would with, for example, [Angular](https://angular.io/)). With the exceptions of React's default component methods and JSX, everything we're doing here is pure JavaScript.
 
 ## The Chart component
-Our D3 chart will be a separate React component _nested_ inside our App component. Keeping components distinct and as self-contained as possible helps make them easier to debug and more reusable. Our chart will be based on Mike Bostock's example [bar chart with negative values](https://bl.ocks.org/mbostock/2368837). Get started by creating a new file called `Chart.js` in your project's `src` directory, importing the now-familiar essentials and setting up the backbone of a class that we'll call, obvs, `Chart`:
+Our D3 chart will be a separate React component that'll be rendered as a _child component_ of App. Keeping components distinct and as self-contained as possible helps make them easier to debug and more reusable. Our chart will be based on Mike Bostock's example [bar chart with negative values](https://bl.ocks.org/mbostock/2368837). Get started by creating a new file called `Chart.js` in your project's `src` directory, importing the now-familiar essentials and setting up the backbone of a class that we'll call, obvs, `Chart`:
 
 ```javascript
 import React, { Component } from 'react';
@@ -358,7 +358,7 @@ export default Chart;
 ```
 
 Couple of new things here:
-* `componentWillReceiveProps()` is another React lifecycle hook. This one is invoked before the component receives new [props](https://reactjs.org/docs/components-and-props.html). In React, “props” simply means data that's passed to a component when it's called. Like state, a component's props are contained within a JavaScript object; they can also be accessed via `this.props` from within the component class. Unlike state, though, props are read-only from the point of view of the component receiving them.
+* `componentWillReceiveProps()` is another React lifecycle hook. This one is invoked before the component receives new [props](https://reactjs.org/docs/components-and-props.html). In React, “props” refers to data passed to a component in order that it can do something with that data. Like state, a component's props are contained within a JavaScript object; they can also be accessed via `this.props` from within the component class. Unlike state, though, props are read-only from the point of view of the component receiving them.
 
   We have to use this particular lifecycle hook here because React will render the Chart component _before_ the App component has finished filtering our data — and it's the filtered data that we'll be passing to our Chart component as a prop. (I promise this'll make sense.)
 * `updateD3()` will be a custom method for rendering the particular SVG elements of the chart that will need to update whenever the data (received as a prop from the App component) changes.
@@ -448,7 +448,6 @@ render() {
       <svg
         width={this.width}
         height={this.height}
-        ref={node => this.node === node}
       >
         {this.bars}
       </svg>
@@ -471,10 +470,10 @@ Call the Chart component and pass it the data filtered by the App component as a
 <Chart data={this.state.filteredData}></Chart>
 ```
 
-Check your page. What do you see?
+Check your page. You should see a bar chart with blue bars and no axes that updates whenever you click one of the toggle buttons. Congrats, you've made an interactive data visualisation with React and D3!
 
 ### Add axes
-TK
+In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component.
 
 ## D3 transitions in React
 TK
