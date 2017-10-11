@@ -88,6 +88,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 At this point, you're ready to start writing React code.
 
 ## The App component
+**If at any point you need to compare your code to a completed version of the tutorial project, you can view all the files [here](https://github.com/davidbjourno/making-interactive-graphics/tree/completed).**
+
 With the project directory open in your code editor, you should see that it has a structure like this:
 
 ```
