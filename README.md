@@ -51,7 +51,7 @@ Open a terminal and run the command
 
 Now run
 
-`git clone git@github.com:davidbjourno/making-interactive-graphics.git`
+`git clone https://github.com/davidbjourno/making-interactive-graphics.git`
 
 followed by
 
