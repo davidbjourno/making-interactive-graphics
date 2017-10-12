@@ -357,7 +357,7 @@ export default Chart;
 ```
 
 Couple of new things here:
-* `componentWillReceiveProps()` is another React lifecycle hook. This one is invoked before the component receives new [props](https://reactjs.org/docs/components-and-props.html). In React, “props” refers to data passed to a component in order that it can do something with that data. Like state, a component's props are contained within a JavaScript object; they can also be accessed via `this.props` from within the component class. Unlike state, though, props are read-only from the point of view of the component receiving them.
+* `componentWillReceiveProps()` is another React lifecycle hook. This one is invoked before the component receives new [props](https://reactjs.org/docs/components-and-props.html). In React, “props” refers to data passed to a component by its parent component in order that it can do something with that data. Like state, a component's props are contained within a JavaScript object; they can also be accessed via `this.props` from within the component class. Unlike state, though, props are read-only from the point of view of the component receiving them.
 
   We have to use this particular lifecycle hook here because React will render the Chart component _before_ the App component has finished filtering our data — and it's the filtered data that we need to pass to our Chart component as a prop. (I promise this'll make sense.)
 * `updateD3()` will be a custom method for rendering the particular SVG elements of the chart that will need to update whenever the data (received as a prop from the App component) changes.
