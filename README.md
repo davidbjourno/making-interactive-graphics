@@ -57,17 +57,13 @@ followed by
 
 `cd making-interactive-graphics`
 
-This'll pull down the tutorial project from GitHub into your home directory and ensure you're working in the project directory. We're going to be using [Yarn](https://yarnpkg.com/en/) to manage the various software packages we need for this project, so run
+This'll pull down the tutorial project from GitHub into your home directory and ensure you're working in the project directory. The project requires several Node software packages to be installed before it'll work, so install them all using [npm](https://www.npmjs.com/) by running
 
-`yarn`
+`npm install`
 
-to install all the required Node packages. If Yarn isn't found in your system, run
+When NPM has finished installing the project dependencies, run
 
-`npm install --global yarn`
-
-to install it via the Node package manager, then try running it again. When Yarn has finished installing the project dependencies, run
-
-`yarn start`
+`npm start`
 
 to start a local web server, then navigate to `localhost:3000` in a browser. You should see this page:
 
@@ -75,9 +71,9 @@ to start a local web server, then navigate to `localhost:3000` in a browser. You
 
 This is a simple React app rendering a logo, header and paragraph of text.
 
-The boilerplate code for this project was created by a tool called [Create React App](https://github.com/facebookincubator/create-react-app), which generates a project structure containing everything we need to start developing with React. It doesn't include D3, though, so we'll need to install that using Yarn. While we're at it, let's also install [React-Bootstrap](https://react-bootstrap.github.io/), so our page elements will be styled with [Bootstrap](https://getbootstrap.com/) CSS:
+The boilerplate code for this project was created by a tool called [Create React App](https://github.com/facebookincubator/create-react-app), which generates a project structure containing everything we need to start developing with React. It doesn't include D3, though, so we'll need to install that using npm. While we're at it, let's also install [React-Bootstrap](https://react-bootstrap.github.io/), so our page elements will be styled with [Bootstrap](https://getbootstrap.com/) CSS:
 
-`yarn add d3 react-bootstrap bootstrap@3`
+`npm install --save d3 react-bootstrap bootstrap@3`
 
 Open the project directory in your code editor (either Atom or Sublime Text) and open the file `src/index.js`. Include the Bootstrap CSS in your app by inserting this at line 4:
 
