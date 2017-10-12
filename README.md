@@ -149,7 +149,9 @@ Not all React components have to be defined by a class; they can also be JavaScr
 
 Back in `index.js`, if you edit some of the text inside the `<p>` tags and save the file, you should see the page reload automatically in your browser to reflect your changes. This is because Create React App projects are set up in such a way that they live-reload by default.
 
-Let's take a leap into the unknown and replace the App component with one that manages its own internal [state](https://reactjs.org/docs/react-component.html#state) and will automatically re-render with changes to the data associated with its state. Replace lines 4-19 of `App.js` with this:
+Let's take a leap into the unknown and replace the App component with one that manages its own internal [state](https://reactjs.org/docs/react-component.html#state). A component's state is a [JavaScript object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects) containing data that determines how and when the component's output is rendered and updated. You can think of it as a sort of control panel for the component: changes made to the data in its state will cause the component to automatically re-render. In this way, a component's state serves as its “single source of truth”, which goes a long way towards simplifying the logic required to make the component behave in the way you want it to.
+
+To see state in action, replace lines 4-19 of `App.js` with this:
 
 ```jsx
 import { Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
@@ -206,8 +208,6 @@ Now your page features a toggle button group which controls the value of the hea
     * Line 36: set the text of the `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2012').
 
 The cumulative effect of all this is that, when a button element is clicked, `this.state.year` is set to the value of that button, and with this update to the component's state, React triggers a smart update of the DOM that changes the text of the `<h1>` element to the value of `this.state.year`.
-
-State (`this.state`) is just a JavaScript object, but hopefully this part of the tutorial goes some way towards illustrating how it serves as the effective “source of truth” for the component, determining how and when its output is rendered and updated.
 
 We can use state to manage more than simple string values, however; we're going to use it to manage the data that will be filtered and then passed to our chart component. We'll load some [IMF data](https://www.imf.org/external/pubs/ft/weo/2017/01/weodata/index.aspx) on G7 countries' GDP per capita growth rates from `public/data.csv` and render this data first in an HTML table to illustrate how our data handling is going to work. Start by importing the Table component from React-Bootstrap on line 4 of `App.js`:
 
@@ -385,6 +385,7 @@ constructor(props) {
 Comparing these to the first few lines of Bostock's [example](https://bl.ocks.org/mbostock/2368837), you should notice more than a few similarities (complicated slightly by the fact that this example uses D3 v3, whereas we're using v4):
 
 ```javascript
+// Don't copy-paste me anywhere! I'm just here for comparison
 var margin = {top: 20, right: 30, bottom: 40, left: 30},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
