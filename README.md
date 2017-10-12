@@ -51,23 +51,19 @@ Open a terminal and run the command
 
 Now run
 
-`git clone git@github.com:davidbjourno/making-interactive-graphics.git`
+`git clone https://github.com/davidbjourno/making-interactive-graphics.git`
 
 followed by
 
 `cd making-interactive-graphics`
 
-This'll pull down the tutorial project from GitHub into your home directory and ensure you're working in the project directory. We're going to be using [Yarn](https://yarnpkg.com/en/) to manage the various software packages we need for this project, so run
+This'll pull down the tutorial project from GitHub into your home directory and ensure you're working in the project directory. The project requires several Node software packages to be installed before it'll work, so install them all using [npm](https://www.npmjs.com/) by running
 
-`yarn`
+`npm install`
 
-to install all the required Node packages. If Yarn isn't found in your system, run
+When NPM has finished installing the project dependencies, run
 
-`npm install --global yarn`
-
-to install it via the Node package manager, then try running it again. When Yarn has finished installing the project dependencies, run
-
-`yarn start`
+`npm start`
 
 to start a local web server, then navigate to `localhost:3000` in a browser. You should see this page:
 
@@ -75,9 +71,9 @@ to start a local web server, then navigate to `localhost:3000` in a browser. You
 
 This is a simple React app rendering a logo, header and paragraph of text.
 
-The boilerplate code for this project was created by a tool called [Create React App](https://github.com/facebookincubator/create-react-app), which generates a project structure containing everything we need to start developing with React. It doesn't include D3, though, so we'll need to install that using Yarn. While we're at it, let's also install [React-Bootstrap](https://react-bootstrap.github.io/), so our page elements will be styled with [Bootstrap](https://getbootstrap.com/) CSS:
+The boilerplate code for this project was created by a tool called [Create React App](https://github.com/facebookincubator/create-react-app), which generates a project structure containing everything we need to start developing with React. It doesn't include D3, though, so we'll need to install that using npm. While we're at it, let's also install [React-Bootstrap](https://react-bootstrap.github.io/), so our page elements will be styled with [Bootstrap](https://getbootstrap.com/) CSS:
 
-`yarn add d3 react-bootstrap bootstrap@3`
+`npm install --save d3 react-bootstrap bootstrap@3`
 
 Open the project directory in your code editor (either Atom or Sublime Text) and open the file `src/index.js`. Include the Bootstrap CSS in your app by inserting this at line 4:
 
@@ -153,7 +149,9 @@ Not all React components have to be defined by a class; they can also be JavaScr
 
 Back in `index.js`, if you edit some of the text inside the `<p>` tags and save the file, you should see the page reload automatically in your browser to reflect your changes. This is because Create React App projects are set up in such a way that they live-reload by default.
 
-Let's take a leap into the unknown and replace the App component with one that manages its own internal [state](https://reactjs.org/docs/react-component.html#state) and will automatically re-render with changes to the data associated with its state. Replace lines 4-19 of `App.js` with this:
+Let's take a leap into the unknown and replace the App component with one that manages its own internal [state](https://reactjs.org/docs/react-component.html#state). A component's state is a [JavaScript object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects) containing data that determines how and when the component's output is rendered and updated. You can think of it as a sort of control panel for the component: changes made to the data in its state will cause the component to automatically re-render. In this way, a component's state serves as its “single source of truth”, which goes a long way towards simplifying the logic required to make the component behave in the way you want it to.
+
+To see state in action, replace lines 4-19 of `App.js` with this:
 
 ```jsx
 import { Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
@@ -210,8 +208,6 @@ Now your page features a toggle button group which controls the value of the hea
     * Line 36: set the text of the `<h1>` element to the value of `this.state.year` (which, on line 10, we gave an initial value of '2012').
 
 The cumulative effect of all this is that, when a button element is clicked, `this.state.year` is set to the value of that button, and with this update to the component's state, React triggers a smart update of the DOM that changes the text of the `<h1>` element to the value of `this.state.year`.
-
-State (`this.state`) is just a JavaScript object, but hopefully this part of the tutorial goes some way towards illustrating how it serves as the effective “source of truth” for the component, determining how and when its output is rendered and updated.
 
 We can use state to manage more than simple string values, however; we're going to use it to manage the data that will be filtered and then passed to our chart component. We'll load some [IMF data](https://www.imf.org/external/pubs/ft/weo/2017/01/weodata/index.aspx) on G7 countries' GDP per capita growth rates from `public/data.csv` and render this data first in an HTML table to illustrate how our data handling is going to work. Start by importing the Table component from React-Bootstrap on line 4 of `App.js`:
 
@@ -389,6 +385,7 @@ constructor(props) {
 Comparing these to the first few lines of Bostock's [example](https://bl.ocks.org/mbostock/2368837), you should notice more than a few similarities (complicated slightly by the fact that this example uses D3 v3, whereas we're using v4):
 
 ```javascript
+// Don't copy-paste me anywhere! I'm just here for comparison
 var margin = {top: 20, right: 30, bottom: 40, left: 30},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
