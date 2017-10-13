@@ -531,7 +531,7 @@ g text {
 }
 ```
 
-And remove the line in chart.js that specifies the fill of each '<rect>'
+And remove the line in Chart.js that specifies the fill of each '<rect>'
 
 ```style={{ fill: 'steelblue' }}```
 
