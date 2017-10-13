@@ -533,7 +533,7 @@ g text {
 
 And remove the line in chart.js that specifies the fill of each '<rect>'
 
-'''style={{ fill: 'steelblue' }}'''
+```style={{ fill: 'steelblue' }}```
 
 ## D3 transitions in React
 
