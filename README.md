@@ -323,7 +323,7 @@ render() {
       </Col>
     </div>
   );
-}}
+}
 ```
 You should see the contents of the table update when you click on the toggle buttons.
 
@@ -476,7 +476,7 @@ Call the Chart component and pass it the data filtered by the App component as a
 Check your page. You should see a chart with black bars and no axes that updates whenever you click one of the toggle buttons. Congrats, you've made an interactive data visualisation with React and D3!
 
 ### Add axes
-In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component. First, add the following [D3 axis methods](https://github.com/d3/d3-axis#d3-axis) to your constructor in 'Chart.js':
+In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component. First, add the following [D3 axis methods](https://github.com/d3/d3-axis#d3-axis) to your constructor in `Chart.js`:
 
 ```javascript
 this.xAxis = d3.axisBottom(this.x)
@@ -531,7 +531,7 @@ g text {
 }
 ```
 
-And remove the line in Chart.js that specifies the fill of each '<rect>'
+And remove the line in `Chart.js` that specifies the fill of each `<rect>`
 
 ```style={{ fill: 'steelblue' }}```
 
