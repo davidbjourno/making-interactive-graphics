@@ -24,25 +24,25 @@ There are plenty of reasons why so many developers choose to use React, many of 
 You'll need to ensure you have the software below installed and working. Mac users may wish to install [Homebrew](https://brew.sh/), which will make it quicker and easier to install most of these requirements. I'm assuming Linux users have all this stuff squared away.
 
 ### A terminal emulator
-macOS | Windows
------ | -------
-[iTerm2](https://www.iterm2.com/index.html) | [cmder](http://cmder.net/) (download the ‘full’ as opposed to the ‘mini’ version, as it includes Git)
+| macOS                                    | Windows                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| [iTerm2](https://www.iterm2.com/index.html) | [cmder](http://cmder.net/) (download the ‘full’ as opposed to the ‘mini’ version, as it includes Git) |
 
 ### Git
-macOS | Windows
------ | -------
-[Git]()/`brew install git` | [Git]() (unnecessary if you installed the full version of cmder)
+| macOS                      | Windows                                  |
+| -------------------------- | ---------------------------------------- |
+| [Git]()/`brew install git` | [Git]() (unnecessary if you installed the full version of cmder) |
 
 ### Node.js
-macOS | Windows
------ | -------
-[Node.js](https://nodejs.org/en/download/)/`brew install node` | [Node.js](https://nodejs.org/en/download/)
+| macOS                                    | Windows                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| [Node.js](https://nodejs.org/en/download/)/`brew install node` | [Node.js](https://nodejs.org/en/download/) |
 
 ### A code editor
-macOS | Windows
------ | -------
-[Atom](https://atom.io/)/`brew cask install atom` | [Atom](https://atom.io/)
-[Sublime Text](https://www.sublimetext.com/3)/`brew cask install sublime-text` | [Sublime Text](https://www.sublimetext.com/3)
+| macOS                                    | Windows                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| [Atom](https://atom.io/)/`brew cask install atom` | [Atom](https://atom.io/)                 |
+| [Sublime Text](https://www.sublimetext.com/3)/`brew cask install sublime-text` | [Sublime Text](https://www.sublimetext.com/3) |
 
 ## Up and running
 Open a terminal and run the command
@@ -147,7 +147,7 @@ In `App.js`, you'll see some more JavaScript and CSS module imports followed by 
 
 Not all React components have to be defined by a class; they can also be JavaScript functions that simply return some JSX to be rendered. We only have two hours for this tutorial, so I'm going to skip over the details of the differences between the two component types and how they work, but you can always go back and read about them [here](https://reactjs.org/docs/components-and-props.html).
 
-Back in `index.js`, if you edit some of the text inside the `<p>` tags and save the file, you should see the page reload automatically in your browser to reflect your changes. This is because Create React App projects are set up in such a way that they live-reload by default.
+Back in `App.js`, if you edit some of the text inside the `<p>` tags and save the file, you should see the page reload automatically in your browser to reflect your changes. This is because Create React App projects are set up in such a way that they live-reload by default.
 
 Let's take a leap into the unknown and replace the App component with one that manages its own internal [state](https://reactjs.org/docs/react-component.html#state). A component's state is a [JavaScript object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects) containing data that determines how and when the component's output is rendered and updated. You can think of it as a sort of control panel for the component: changes made to the data in its state will cause the component to automatically re-render. In this way, a component's state serves as its “single source of truth”, which goes a long way towards simplifying the logic required to make the component behave in the way you want it to.
 
@@ -476,7 +476,7 @@ Call the Chart component and pass it the data filtered by the App component as a
 Check your page. You should see a chart with black bars and no axes that updates whenever you click one of the toggle buttons. Congrats, you've made an interactive data visualisation with React and D3!
 
 ### Add axes
-In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component. First, add the following [D3 axis methods](https://github.com/d3/d3-axis#d3-axis) to your constructor:
+In his book [‘React + D3v4’](https://swizec.com/reactd3js/), Swizec Teller suggests abandoning the no-D3-DOM-control rule when it comes to rendering chart axes, and I'm inclined to agree with him. Axes are fiddly and annoying to build from scratch, so we're going to let D3 control a small part of the DOM in order to render axes in our Chart component. First, add the following [D3 axis methods](https://github.com/d3/d3-axis#d3-axis) to your constructor in `Chart.js`:
 
 ```javascript
 this.xAxis = d3.axisBottom(this.x)
@@ -531,5 +531,10 @@ g text {
 }
 ```
 
+And remove the line in `Chart.js` that specifies the fill of each `<rect>`
+
+```style={{ fill: 'steelblue' }}```
+
 ## D3 transitions in React
+
 TK
