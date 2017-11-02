@@ -130,7 +130,7 @@ Here, the `render()` method from the `react-dom` package (installed into the pro
 
 (I know this is a lot of jargon. Bear with me.)
 
-It's standard practice to have a short `index.js` like this in a React project. Its primary function is to establish an entry point for the app on the page. A common name for the top-level component in a React app is ‘App’; hence we render `<App />` to `document.getElementById('root')`, which returns the `<div>` on line 29 of `public/index.html`.
+It's standard practice to have a short `index.js` like this in a React project. Its primary function is to establish an entry point for the app on the page. A common name for the top-level component in a React app is ‘App’; hence we render `<App />` to `document.getElementById('root')` (which returns the `<div>` on line 29 of `public/index.html`).
 
 Where does the App component come from? Take a look at the first five rows of `index.js`:
 
@@ -397,7 +397,7 @@ var y = d3.scale.ordinal()
     .rangeRoundBands([0, height], 0.1);
 ```
 
-Anyway, whatever; the principles are the same! We've established our chart dimensions and defined a [continuous scale](https://github.com/d3/d3-scale#continuous-scales) for the x-axis and an [ordinal scale](https://github.com/d3/d3-scale#ordinal-scales) for the y-axis. Next, let's write our `updateD3()` method:
+Maybe they're not all that similar. Anyway, whatever; the principles are the same! We've established our chart dimensions and defined a [continuous scale](https://github.com/d3/d3-scale#continuous-scales) for the x-axis and an [ordinal scale](https://github.com/d3/d3-scale#ordinal-scales) for the y-axis. Next, let's write our `updateD3()` method:
 
 ```jsx
 updateD3(props) {
@@ -531,9 +531,11 @@ g text {
 }
 ```
 
-And remove the line in `Chart.js` that specifies the fill of each `<rect>`
+And remove the line in `Chart.js` that specifies the fill of each `<rect>`:
 
-```style={{ fill: 'steelblue' }}```
+```css
+style={{ fill: 'steelblue' }}
+```
 
 ## D3 transitions in React
 
