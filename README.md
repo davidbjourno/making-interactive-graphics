@@ -1,7 +1,7 @@
 # Making interactive graphics with D3 and React
 An original tutorial for [Journocoders London](https://www.meetup.com/Journocoders/), October 12, 2017.
 
-🚶 David Blood/[@davidcblood](https://twitter.com/davidcblood)/[first] dot [last] at ft.com
+🚶 David Blood | [@davidcblood](https://twitter.com/davidcblood) | [first] dot [last] at ft.com
 
 ## Introduction
 
